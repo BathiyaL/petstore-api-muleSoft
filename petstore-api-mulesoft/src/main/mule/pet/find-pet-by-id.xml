@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="f357998a-fa5c-46bf-a98f-3d275282a6dd" basePath="api/v1" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="find-pet-by-idFlow" doc:id="a1361eb4-00ec-4ecb-b092-b47ccb598b02" >
+		<http:listener doc:name="Listener" doc:id="d0e3192a-78eb-470c-8e7c-1edc9d4eff1e" config-ref="HTTP_Listener_config" path="pet" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0d1ffae3-9600-4a1a-9f6c-68a061b17c3d" message="This is a new pet"/>
+	</flow>
+</mule>
