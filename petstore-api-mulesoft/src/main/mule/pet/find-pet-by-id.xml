@@ -8,7 +8,28 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 		<http:listener-connection host="0.0.0.0" port="8081" />
 	</http:listener-config>
 	<flow name="find-pet-by-idFlow" doc:id="a1361eb4-00ec-4ecb-b092-b47ccb598b02" >
-		<http:listener doc:name="Listener" doc:id="d0e3192a-78eb-470c-8e7c-1edc9d4eff1e" config-ref="HTTP_Listener_config" path="pet" allowedMethods="GET"/>
+		<http:listener doc:name="Listener" doc:id="d0e3192a-78eb-470c-8e7c-1edc9d4eff1e" config-ref="HTTP_Listener_config" path="pet" allowedMethods="GET">
+			<http:response statusCode="200" reasonPhrase='#["OK"]' >
+				<http:body ><![CDATA[{
+  "id": 5,
+  "category": {
+    "id": 0,
+    "name": "string"
+  },
+  "name": "doggie",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 0,
+      "name": "string"
+    }
+  ],
+  "status": "string"
+}]]></http:body>
+			</http:response>
+		</http:listener>
 		<logger level="INFO" doc:name="Logger" doc:id="0d1ffae3-9600-4a1a-9f6c-68a061b17c3d" message="This is a new pet"/>
 	</flow>
 </mule>
