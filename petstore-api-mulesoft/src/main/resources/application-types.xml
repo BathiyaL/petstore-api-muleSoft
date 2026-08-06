@@ -1,0 +1,22 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="petObject" format="json">
+      <types:shape format="weave" example="examples/petObject.json"><![CDATA[%dw 2.0
+
+type petObject = {|
+  id: Number {"typeId": "int"}, 
+  category: {|
+    id: Number {"typeId": "int"}, 
+    name: String
+  |}, 
+  name: String, 
+  photoUrls: Array<String>, 
+  tags: Array<{|    id: Number {"typeId": "int"},     name: String  |}>, 
+  status: String
+|} {"example": "{\\\"id\\\":5,\\\"category\\\":{\\\"id\\\":0,\\\"name\\\":\\\"string\\\"},\\\"name\\\":\\\"doggie\\\",\\\"photoUrls\\\":[\\\"string\\\"],\\\"tags\\\":[{\\\"id\\\":0,\\\"name\\\":\\\"string\\\"}],\\\"status\\\":\\\"string\\\"}"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+</types:mule>
