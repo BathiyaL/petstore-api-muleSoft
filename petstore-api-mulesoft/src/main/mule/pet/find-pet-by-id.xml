@@ -10,11 +10,11 @@ http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/htt
 	<flow name="find-pet-by-idFlow" doc:id="a1361eb4-00ec-4ecb-b092-b47ccb598b02" >
 		<http:listener doc:name="FindPetByID" doc:id="d0e3192a-78eb-470c-8e7c-1edc9d4eff1e" config-ref="HTTP_Listener_config" path="pet/{petId}" allowedMethods="GET">
 			<http:response statusCode="#[vars.successStatusCode]" reasonPhrase='#[vars.successReasonPharase]' >
-				<http:body ><![CDATA[{"id":5,"category":{"id":0,"name":"string"},"name":"doggie","photoUrls":["string"],"tags":[{"id":0,"name":"string"}],"status":"string"}]]></http:body>
 			</http:response>
 		</http:listener>
 		<logger level="INFO" doc:name="Logger" doc:id="0d1ffae3-9600-4a1a-9f6c-68a061b17c3d" message="This is a new pet"/>
 		<set-variable value="200" doc:name="StatusCode" doc:id="57dcc58a-2c51-4e57-9d32-4f5f76189874" variableName="successStatusCode"/>
 		<set-variable value='#["OK"]' doc:name="ReasonPharase" doc:id="bda5d554-769d-4934-843c-0fae53f6d412" variableName="successReasonPharase"/>
+		<set-payload value='#[%dw 2.0&#10;output application/json&#10;---&#10;{&#10;    "id": attributes.uriParams.petId as Number default 0,&#10;    "category": {"id": 0, "name": "string"},&#10;    "name": "doggie",&#10;    "photoUrls": ["string"],&#10;    "tags": [{"id": 0, "name": "string"}],&#10;    "status": "string"&#10;}]' doc:name="sucessPayload" doc:id="bc6e3820-5d3a-4eca-86aa-8f885fe01f52" />
 	</flow>
 </mule>
