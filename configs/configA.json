@@ -1,6 +1,7 @@
 {
   "filename": "configA.json",
   "$schema": "https://ui.shadcn.com/schema.json",
+  "commitChanges": "update by dev",
   "style": "base-nova",
   "rsc": true,
   "tsx": true,
