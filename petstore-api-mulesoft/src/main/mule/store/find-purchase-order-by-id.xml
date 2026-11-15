@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<flow name="find-purchase-order-by-idFlow" doc:id="debf19a6-2c7c-4bef-8e8b-0aa2bc6785e1" >
+		<http:listener doc:name="findPoByIdListener" doc:id="87a31c0f-0f8d-4e32-a183-82e17a0be259" config-ref="HTTP_Listener_config" path="store/order/{orderId}" />
+		<logger level="INFO" doc:name="requestLogger" doc:id="8af1aea0-22cd-4f37-bb24-5f1b9dc24877" message="Fetching an order"/>
+		<choice doc:name="Choice" doc:id="a36f894b-fed2-4998-98ee-12fe132f15e2" >
+			<when expression="lower(attributes.headers.'accept' default &quot;&quot;) contains &quot;application/xml&quot;">
+				<ee:transform doc:name="Transform Message" doc:id="4b8dcc4f-192c-45ec-be0c-53f232f2ec90" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+{
+	order: {
+		id: attributes.uriParams.orderId,
+		petId: 1,
+		quantity: 2,
+		shipDate: "2026-10-10T03:02:03.302+0000",
+		status: "placed",
+		complete: false
+	}
+
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</when>
+			<otherwise>
+				<ee:transform doc:name="Transform Message" doc:id="cb5e8851-43ac-4e5c-8ef2-0cc41eb5b623" >
+					<ee:message >
+						<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+  "id": attributes.uriParams.orderId,
+  "petId": 1,
+  "quantity": 2,
+  "shipDate": "2026-10-10T03:02:03.302+0000",
+  "status": "placed",
+  "complete": false
+}]]></ee:set-payload>
+					</ee:message>
+				</ee:transform>
+			</otherwise>
+		</choice>
+	</flow>
+</mule>
